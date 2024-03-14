@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: covid-pass-v1
+  labels:
+    app: covid-pass
+    version: v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: covid-pass
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: covid-pass
+        version: v1
+    spec:
+      containers:
+      - name: covid-pass
+        image: your-registry/covid-pass:v1
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: covid-pass-v2
+  labels:
+    app: covid-pass
+    version: v2
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: covid-pass
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: covid-pass
+        version: v2
+    spec:
+      containers:
+      - name: covid-pass
+        image: your-registry/covid-pass:v2
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: covid-pass-v3
+  labels:
+    app: covid-pass
+    version: v3
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: covid-pass
+      version: v3
+  template:
+    metadata:
+      labels:
+        app: covid-pass
+        version: v3
+    spec:
+      containers:
+      - name: covid-pass
+        image: your-registry/covid-pass:v3
+        ports:
+        - containerPort: 8080
