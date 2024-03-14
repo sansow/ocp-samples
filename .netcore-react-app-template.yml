@@ -1,0 +1,40 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: dotnet-react-template
+  annotations:
+    description: Template for .NET Core with React frontend, Service Mesh, Pipelines, and GitOps
+objects:
+  - apiVersion: apps.openshift.io/v1
+    kind: DeploymentConfig
+    metadata:
+      name: dotnet-react-app
+    spec:
+      template:
+        metadata:
+          labels:
+            app: dotnet-react-app
+        spec:
+          containers:
+            - name: dotnet-core
+              image: <your-dotnet-image>
+              ports:
+                - containerPort: 80
+            - name: react-frontend
+              image: <your-react-image>
+              ports:
+                - containerPort: 3000
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: dotnet-react-service
+    spec:
+      selector:
+        app: dotnet-react-app
+      ports:
+        - port: 80
+          targetPort: 80
+          protocol: TCP
+  # Add Service Mesh configuration here
+  # Add Pipeline configuration here
+parameters: []
