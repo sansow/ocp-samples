@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sqlserver-config
+data:
+  SQLSERVER_HOST: "your-sql-server-host"
+  SQLSERVER_PORT: "1433"
+  SQLSERVER_DATABASE: "your-database-name"
+  SQLSERVER_USER: "your-username"
+  SQLSERVER_PASSWORD: "your-password"
