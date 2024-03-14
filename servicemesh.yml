@@ -1,0 +1,25 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  namespace: istio-system
+spec:
+  profile: default
+  components:
+    ingressGateways:
+      - name: istio-ingressgateway
+        enabled: true
+      # Add additional ingress gateways if needed
+  meshConfig:
+    defaultConfig:
+      proxyMetadata:
+        ISTIO_META_DNS_CAPTURE: "true"  # Enable DNS capture for Istio
+        ISTIO_META_INTERCEPTION_MODE: "REDIRECT"  # Use REDIRECT mode for traffic interception
+      accessLogFile: "/dev/stdout"  # Log to stdout
+  values:
+    global:
+      # Configure the Istio control plane
+      controlPlaneSecurityEnabled: true  # Enable Istio control plane security
+    gateways:
+      istio-ingressgateway:
+        injectionTemplate: gateway  # Use the gateway injection template
+    # Configure additional Istio features as needed, such as VirtualServices, DestinationRules, etc.
