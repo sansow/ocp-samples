@@ -14,7 +14,9 @@ spec:
         cpu: "1"
         memory: "1Gi"
 
-#In this example:
 
+#In the YAML configuration file for each pod, you can specify resource requests and limits for CPU and memory usage. Resource requests define the minimum amount of resources that a pod requires to run, while resource limits define the maximum amount of resources that a pod can consume.
+# kubectl apply -f resourceLimits.yml from k8s CLI will create my-pod with 0.5vCPUs and 512MB memory and is limited to max 1vCPU and 1Gi memory
 #The pod requests a minimum of 0.5 vCPUs and 512MB of memory.
 #The pod is limited to using a maximum of 1 vCPU and 1GB of memory.
+
