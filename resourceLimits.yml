@@ -13,3 +13,8 @@ spec:
       limits:
         cpu: "1"
         memory: "1Gi"
+
+#In this example:
+
+#The pod requests a minimum of 0.5 vCPUs and 512MB of memory.
+#The pod is limited to using a maximum of 1 vCPU and 1GB of memory.
