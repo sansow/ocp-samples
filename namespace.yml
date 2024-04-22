@@ -1,0 +1,20 @@
+# a namespace template yml that sets limits: Defines resource limits for the namespace.
+# memory: Specifies the maximum amount of memory that can be allocated to pods in the namespace, set to "2Gi" (2 gigabytes).
+# cpu: Specifies the maximum number of CPU cores that can be allocated to pods in the namespace, set to "4".
+# requests: Defines the minimum amount of resources that should be available for pods in the namespace. These resources are guaranteed to be available to the pods.
+# memory: Specifies the minimum amount of memory required for pods in the namespace, set to "1Gi" (1 gigabyte).
+# cpu: Specifies the minimum number of CPU cores required for pods in the namespace, set to "2".
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: example-namespace
+  labels:
+    app: example-app
+spec:
+  limits:
+    memory: "2Gi"
+    cpu: "4"
+  requests:
+    memory: "1Gi"
+    cpu: "2"
