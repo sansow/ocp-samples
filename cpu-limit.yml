@@ -1,0 +1,12 @@
+#set CPU limits for each pod in their Kubernetes environment using YAML configuration files. In this example, we'll create a YAML file defining a pod with a CPU limit of 8 vCPUs:
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    resources:
+      limits:
+        cpu: "8"
