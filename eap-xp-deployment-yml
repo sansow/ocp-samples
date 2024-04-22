@@ -1,0 +1,35 @@
+# Below is a sample Deployment YAML configuration file that creates a deployment using a JBoss EAP XP image, along with resource limits and quotas set for CPU and memory:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jboss-eap-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: jboss-eap
+  template:
+    metadata:
+      labels:
+        app: jboss-eap
+    spec:
+      containers:
+      - name: jboss-eap-container
+        image: registry.redhat.io/jboss-eap-7/eap-xp4-openjdk11-openshift-rhel8@sha256:f70104a13da2e43b56cfe6aa31252a19a2fb84fd4a6713c363de5754fbf72934
+        resources:
+          limits:
+            cpu: "2"
+            memory: "2Gi"
+          requests:
+            cpu: "1"
+            memory: "1Gi"
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: jboss-eap-quota
+spec:
+  hard:
+    pods: "10"
+    cpu: "8"
+    memory: 10Gi
