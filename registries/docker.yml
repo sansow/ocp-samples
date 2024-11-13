@@ -1,0 +1,35 @@
+oc create secret docker-registry dockerhub-secret \
+  --docker-server=https://index.docker.io/v1/ \
+  --docker-username=docker202x \
+  --docker-password=<enter-your-password-here> \
+  --docker-email=<your-email-address>
+
+  oc create secret docker-registry quay-secret \
+  --docker-server=quay.io \
+  --docker-username=sabhaska \
+  --docker-password=<enter-your-password-here> \
+  --docker-email=<your-email-address>
+#After creating these secrets, link them to your default service account:
+  oc secrets link default dockerhub-secret --for=pull
+oc secrets link default quay-secret --for=pull
+#An ImageContentSourcePolicy (ICSP) is a custom resource in OpenShift that allows you to redirect image pulls from one registry to another. 
+#This is particularly useful in disconnected or air-gapped environments where you need to pull images from a local mirror instead of the original public registry.
+
+ #ImageContentSourcePolicy (ICSP) for Docker Hub and Quay.io. Here's an example ICSP that includes both registries:
+
+ apiVersion: operator.openshift.io/v1alpha1
+kind: ImageContentSourcePolicy
+metadata:
+  name: mirror-config
+spec:
+  repositoryDigestMirrors:
+  - mirrors:
+    - mirror.example.com/docker-hub
+    source: docker.io
+  - mirrors:
+    - mirror.example.com/quay-io
+    source: quay.io
+
+#This refers to images that have been copied from their original source (like quay.io or docker.io) to a local registry mirror.
+
+    
