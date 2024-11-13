@@ -1,0 +1,25 @@
+#ImageTagMirrorSet for Docker Hub:
+
+apiVersion: config.openshift.io/v1
+kind: ImageTagMirrorSet
+metadata:
+  name: dockerhub-mirror
+spec:
+  imageTagMirrors:
+  - source: docker.io
+    mirrors:
+    - mirror.example.com/dockerhub
+
+
+    ---
+   # ImageTagMirrorSet for Quay.io:
+
+apiVersion: config.openshift.io/v1
+kind: ImageTagMirrorSet
+metadata:
+  name: quay-mirror
+spec:
+  imageTagMirrors:
+  - source: quay.io
+    mirrors:
+    - mirror.example.com/quay
