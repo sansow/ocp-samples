@@ -1,0 +1,57 @@
+Set up Quay as a mirror registry on an Azure Red Hat OpenShift (ARO) cluster, follow these structured steps:
+Prerequisites
+  Ensure you have administrative access to your ARO cluster.
+  Have an Azure account and necessary permissions to create resources.
+  Familiarity with the OpenShift web console and command-line interface (CLI).
+  
+Step 1: Create Azure Resources
+    Create Resource Group:
+    Log into the Azure portal.
+    Navigate to "Resource groups" and create a new resource group.
+    Create Storage Account:
+    In the Azure portal, search for "Storage accounts".
+    Click "Create" and fill in the required details such as resource group, storage account name, and performance options.
+    After creation, navigate to the storage account and create a new container within it. Set the privacy level to "Public access blob".
+    Access Keys:
+    Within your storage account, go to "Access keys" and note down the Storage Account Name and Access Key for later use.
+      
+Step 2: Install Red Hat Quay Operator
+    OpenShift Console:
+    Log into the OpenShift web console using your admin credentials.
+    Install Quay Operator:
+    Navigate to Operators > OperatorHub.
+    Search for "Red Hat Quay" and click on it.
+    Click "Install" and choose to install it in all namespaces or a specific one based on your preference.
+      
+Step 3: Configure Quay Registry
+    Create Quay Registry Instance:
+    Go to Operators > Installed Operators > Red Hat Quay.
+    Click on "Quay Registry" and then "Create QuayRegistry".
+    Fill in the form or YAML view with necessary configurations, including:
+    Storage Engine: Select "Azure Blob Storage".
+    Container Name: Enter the name of the container created earlier.
+    Account Name and Key: Use the Storage Account Name and Access Key noted earlier.
+    Validate Configuration:
+    After filling in the details, click "Validate Configuration Changes" and then "Reconfigure Quay".
+      
+Step 4: Set Up Mirroring
+    Configure Image Content Sources:
+    Modify your install-config.yaml file to include image content sources that point to your Quay registry. For example:
+    text
+    imageContentSources:
+    - mirrors:
+      - myimageregistry.example.com:8443/ocp4/openshift4
+      source: quay.io/openshift-release-dev/ocp-release
+    
+    Mirror Images:
+    Use the OpenShift CLI to mirror images from Quay to your local registry using commands like:
+    bash
+    oc adm release mirror \
+      --from=quay.io/${PRODUCT_REPO}/${RELEASE_NAME}:${OCP_RELEASE}-${ARCHITECTURE} \
+      --to=${LOCAL_REGISTRY}/${LOCAL_REPOSITORY} \
+      --insecure \
+      -a ${LOCAL_SECRET_JSON}
+
+Step 5: Verify Setup
+    Confirm that your Quay registry is operational by accessing its console.
+    Check that images are being mirrored correctly by pushing an image to your registry and verifying its presence.
