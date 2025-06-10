@@ -1,0 +1,24 @@
+apiVersion: apps.openshift.io/v1
+kind: MachineSet
+metadata:
+  name: genomics-workers
+  namespace: openshift-machine-api
+spec:
+  selector:
+    matchLabels:
+      role: genomics
+  template:
+    metadata:
+      labels:
+        role: genomics
+      annotations:
+        machine.openshift.io/cluster-api-machine-role: genomics
+        chargeback.openshift.io/cost-center: "genomics-research"
+        chargeback.openshift.io/owner: "team-genomics"
+    spec:
+      providerSpec:
+        value:
+          instanceType: Standard_D8s_v3
+          tags:
+            chargeback.openshift.io/cost-center: "genomics-research"
+            chargeback.openshift.io/owner: "team-genomics"
